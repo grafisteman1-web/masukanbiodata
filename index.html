@@ -88,10 +88,10 @@
 
       const nama = document.getElementById('nama').value;
       const usia = document.getElementById('usia').value;
-
+      const pekerjaan = document.getElementById('pekerjaan').value;
       fetch('https://script.google.com/macros/s/AKfycbxD1GIcsaDD2nRyrAtr-ALx-iWBN4MSbB1ftE1WI1eiM4-JZxunII_2URabk1-qUsFb/exec', {
         method: 'POST',
-        body: new URLSearchParams({ nama, usia })
+        body: new URLSearchParams({ nama, usia, pekerjaan })
       })
         .then(response => response.text())
         .then(result => {
