@@ -1,152 +1,353 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Isi saja!</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- penting untuk mobile -->
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      background: url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh_6RUMhDQFcIW93acNbx3Qj0CitWD-4Y1ck_aUH4DaFrypORNhN4U_sSCveihF0PD6KpAe3pN_nkzDADa-2aRKg9muR1mUcJEX5zyDSIOAr6CCkBw95ekWFmG7SRFh2YxYjUdRjUyQDEV_UmL8ogg59DOTY4OcnUC1vzdGhaC8yVl9-vMZr3JJHFizVR8/s262/Screenshot%202025-08-24%2014.21.15.png");
-      background-size: auto; /* atau contain/cover sesuai kebutuhan */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal SMANIT 26</title>
+    <!-- Import Google Fonts & Boxicons untuk Icon -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    
+    <style>
+        /* ================= BASE STYLES & ANIMATED BACKGROUND ================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
 
-    .container {
-      background: white;
-      padding: 30px 40px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      max-width: 400px;
-      width: 100%;
-      transition: all 0.3s ease;
-    }
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(-45deg, #1e3c72, #2a5298, #0f2027, #203a43, #2c5364);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            padding: 20px;
+            color: #fff;
+            overflow-x: hidden;
+        }
 
-    .container img {
-      width: 80px;
-      margin-bottom: 20px;
-    }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
-    .container h2 {
-      margin-bottom: 25px;
-      color: #333;
-      font-size: 1.5rem;
-    }
+        /* Background efek partikel dekoratif (Motion Graphic Element) */
+        .bg-shapes {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            overflow: hidden; z-index: -1;
+        }
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+            border-radius: 50%;
+            animation: float 10s infinite ease-in-out alternate;
+        }
+        .shape:nth-child(1) { width: 300px; height: 300px; top: -10%; left: -10%; animation-delay: 0s; }
+        .shape:nth-child(2) { width: 400px; height: 400px; bottom: -20%; right: -10%; animation-delay: -2s; }
+        .shape:nth-child(3) { width: 150px; height: 150px; top: 40%; left: 80%; animation-delay: -4s; }
 
-    input[type="text"],
-    input[type="text"],
-    input[type="text"]{
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0 20px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      ont-size: 1rem;
-      box-sizing: border-box;
-    }
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-50px) rotate(20deg); }
+        }
 
-    button {
-      background-color: #4CAF50;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-      font-size: 1rem;
-      transition: background 0.3s ease;
-    }
+        /* ================= CONTAINER & HEADER ================= */
+        .portal-container {
+            width: 100%;
+            max-width: 600px; /* Ukuran pas untuk desktop maupun mobile */
+            z-index: 10;
+        }
 
-    button:hover {
-      background-color: #45a049;
-    }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
 
-    #status {
-      margin-top: 15px;
-      color: #333;
-      font-weight: bold;
-      font-size: 0.95rem;
-    }
-    /* Responsif untuk layar kecil (HP) */
-    @media (max-width: 600px) {
-      body {
-        padding: 15px;
-      }
-      .container {
-        padding: 25px 20px;
-        max-width: 100%;
-      }
-      .container h2 {
-        font-size: 1.3rem;
-      }
-      input, button {
-        font-size: 1rem;
-      }
-    }
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+        }
 
-    /* Responsif untuk layar besar (desktop/laptop) */
-    @media (min-width: 900px) {
-      .container {
-        max-width: 500px;
-        padding: 40px;
-      }
-      .container h2 {
-        font-size: 1.8rem;
-      }
-      input, button {
-        font-size: 1.1rem;
-      }
-    }
-  </style>
+        header p {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* ================= ACCORDION STYLES (GLASSMORPHISM) ================= */
+        .accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .accordion-item {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+        }
+
+        .accordion-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .accordion-header {
+            width: 100%;
+            padding: 20px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-left i {
+            font-size: 1.8rem;
+            color: #4facfe;
+            text-shadow: 0 0 10px rgba(79, 172, 254, 0.5);
+            transition: 0.3s;
+        }
+
+        .header-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .toggle-icon {
+            font-size: 1.5rem;
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        /* ================= ACCORDION CONTENT & BUTTON ================= */
+        .accordion-content {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 0 25px;
+        }
+
+        .content-inner {
+            padding: 10px 0 25px 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .content-desc {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+        }
+
+        .btn-visit {
+            align-self: flex-start;
+            padding: 10px 24px;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: #000;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 242, 254, 0.3);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .btn-visit i {
+            font-size: 1.2rem;
+            transition: 0.3s;
+        }
+
+        .btn-visit:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 242, 254, 0.5);
+            color: #fff;
+        }
+
+        .btn-visit:hover i {
+            transform: translateX(4px);
+        }
+
+        /* Active States */
+        .accordion-item.active {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: rgba(79, 172, 254, 0.4);
+        }
+        
+        .accordion-item.active .toggle-icon {
+            transform: rotate(180deg);
+            color: #4facfe;
+        }
+
+        .accordion-item.active .header-left i {
+            color: #00f2fe;
+            transform: scale(1.1);
+        }
+
+        /* ================= KEYFRAMES UNTUK LOAD ANIMASI ================= */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            header h1 { font-size: 2rem; }
+            .header-title { font-size: 1rem; }
+            .header-left i { font-size: 1.5rem; }
+        }
+    </style>
 </head>
 <body>
 
-  <div class="container">
-    <!-- Ganti src dengan link logo kamu -->
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtQ4dUTSlp9cd2MMjz2lIyNeG_RZePBa2BYBPpyiqQ8ABrAVJveb3WaDpXwB0VyIJEi6w&usqp=CAU" alt="Logo">
+    <!-- Motion Graphic Background Elements -->
+    <div class="bg-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
 
-    <h2>Isi saja!</h2>
+    <!-- Main Container -->
+    <div class="portal-container">
+        <header>
+            <h1>Portal Terpadu</h1>
+            <p>Pilih layanan sistem informasi di bawah ini</p>
+        </header>
 
-    <form id="dataForm">
-      <input type="text" id="nama" name="nama" placeholder="Nama Lengkap" required>
-      <input type="date" id="usia" name="usia" placeholder="Usia" required>
-      <input type="text" id="pekerjaan" name="pekerjaan" placeholder="Pekerjaan" required>
-      <button type="submit">Kirim</button>
-    </form>
+        <!-- Tempat Accordion di-generate oleh JavaScript -->
+        <div class="accordion" id="accordion-container">
+            <!-- Item akan ditambahkan otomatis di sini -->
+        </div>
+    </div>
 
-    <p id="status"></p>
-  </div>
+    <!-- ================= JAVASCRIPT ================= -->
+    <script>
+        // 1. DATA MENU: TAMBAHKAN MENU BARU DI SINI DENGAN MUDAH
+        // Anda bisa mengganti ikon dengan mencari nama ikon di boxicons.com
+        const portalData = [
+            {
+                title: "Portal Piket",
+                link: "https://piketsmanit26.web.app/",
+                icon: "bx-calendar-check",
+                desc: "Akses sistem informasi piket untuk memantau kehadiran dan jadwal petugas piket harian."
+            },
+            {
+                title: "Portal BK",
+                link: "https://piketsmanit26.web.app/siskomen.html",
+                icon: "bx-support",
+                desc: "Layanan Bimbingan dan Konseling. Akses data pelanggaran, prestasi, dan konsultasi siswa."
+            },
+            {
+                title: "Portal Siswa",
+                link: "https://piketsmanit26.web.app/report_siswa.html",
+                icon: "bx-user-pin",
+                desc: "Halaman khusus siswa untuk melihat laporan evaluasi, nilai, dan informasi akademik."
+            },
+            {
+                title: "Portal LMS Guru",
+                link: "https://smanitlms26.web.app/#",
+                icon: "bx-book-reader",
+                desc: "Learning Management System (LMS) khusus tenaga pendidik untuk mengelola modul pembelajaran."
+            },
+            {
+                title: "Portal LMS Kokulikuler",
+                link: "https://smanitlms26.web.app/siswa.html",
+                icon: "bx-medal",
+                desc: "Sistem manajemen untuk kegiatan kokulikuler, ekstrakurikuler, dan pengembangan karakter."
+            }
+        ];
 
-  <script>
-    document.getElementById('dataForm').addEventListener('submit', function (e) {
-      e.preventDefault();
+        // 2. FUNGSI UNTUK GENERATE HTML DARI DATA DI ATAS
+        const container = document.getElementById('accordion-container');
 
-      const nama = document.getElementById('nama').value;
-      const usia = document.getElementById('usia').value;
-      const pekerjaan = document.getElementById('pekerjaan').value;
-      fetch('https://script.google.com/macros/s/AKfycbzcI6W_eVh44YLx8ObtN147ZSH-r4eY5MXgKRxBgnZagnJ_oSN1FVaC2btTZS6pXyqC/exec', {
-        method: 'POST',
-        body: new URLSearchParams({ nama, usia, pekerjaan })
-      })
-        .then(response => response.text())
-        .then(result => {
-          document.getElementById('status').innerText = result;
-          document.getElementById('dataForm').reset();
-            // Jika sukses, redirect ke halaman lain
-        window.location.href = "https://sosiotronik.blogspot.com";
-        })
-        .catch(error => {
-          document.getElementById('status').innerText = 'Terjadi kesalahan saat mengirim data.';
-          console.error(error);
+        portalData.forEach((item, index) => {
+            // Memberikan delay animasi berurutan (cascade) pada saat load
+            const animDelay = (index * 0.15) + 's';
+
+            const accordionItem = document.createElement('div');
+            accordionItem.className = 'accordion-item';
+            accordionItem.style.animationDelay = animDelay;
+
+            accordionItem.innerHTML = `
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="header-left">
+                        <i class='bx ${item.icon}'></i>
+                        <span class="header-title">${item.title}</span>
+                    </div>
+                    <i class='bx bx-chevron-down toggle-icon'></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="content-inner">
+                        <p class="content-desc">${item.desc}</p>
+                        <a href="${item.link}" target="_blank" class="btn-visit">
+                            Buka Portal <i class='bx bx-right-arrow-alt'></i>
+                        </a>
+                    </div>
+                </div>
+            `;
+            container.appendChild(accordionItem);
         });
-    });
-  </script>
 
+        // 3. FUNGSI LOGIKA ACCORDION (ANIMASI BUKA-TUTUP)
+        function toggleAccordion(headerElement) {
+            const currentItem = headerElement.parentElement;
+            const currentContent = currentItem.querySelector('.accordion-content');
+            const isActive = currentItem.classList.contains('active');
+
+            // Opsional: Tutup semua accordion lain yang sedang terbuka
+            document.querySelectorAll('.accordion-item').forEach(item => {
+                item.classList.remove('active');
+                item.querySelector('.accordion-content').style.maxHeight = null;
+                item.querySelector('.accordion-content').style.opacity = '0';
+                item.querySelector('.accordion-content').style.padding = '0 25px';
+            });
+
+            // Jika yang diklik sebelumnya tidak aktif, maka buka
+            if (!isActive) {
+                currentItem.classList.add('active');
+                // Set padding dan hitung tinggi konten untuk transisi CSS yang halus
+                currentContent.style.padding = '0 25px 25px 25px';
+                currentContent.style.maxHeight = currentContent.scrollHeight + 50 + "px"; 
+                currentContent.style.opacity = '1';
+            }
+        }
+    </script>
 </body>
 </html>
