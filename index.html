@@ -127,7 +127,6 @@
         }
 
 
-
         /* Responsif untuk layar HP kecil */
         @media (max-width: 600px) {
             .carousel-item { width: 200px; height: 150px; }
@@ -190,6 +189,7 @@
         let startX = 0;
         let startDragIndex = 0;
         let hasMoved = false;
+        let startXCoord = 0; // Tambahan untuk deteksi jarak riillet startXCoord = 0; // Tambahan untuk deteksi jarak riil
         let snapTimeout;
         let lastRenderedIndex = -999; // Untuk mendeteksi apakah elemen sedang bergerak
 
@@ -276,6 +276,7 @@
             isDragging = true;
             hasMoved = false; 
             startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+            startXCoord = startX; // Simpan posisi awal murni
             startDragIndex = targetIndex;
             scene.style.cursor = 'grabbing';
             clearTimeout(snapTimeout);
@@ -290,8 +291,8 @@
             targetIndex = startDragIndex - (diffX / dragFactor);
             targetIndex = Math.max(-0.2, Math.min(menuData.length - 0.8, targetIndex));
             
-            // Tingkatkan toleransi geseran jadi 15px agar kursor tremor saat klik tidak terhitung sebagai Drag
-            if (Math.abs(diffX) > 15) {
+            // Hanya anggap sebagai pergeseran (swipe) jika pergerakan jari/mouse lebih dari 25px
+            if (Math.abs(currentX - startXCoord) > 25) {
                 hasMoved = true;
             }
         }
@@ -312,27 +313,24 @@
         scene.addEventListener('touchstart', onPointerDown, { passive: true });
         window.addEventListener('touchmove', onPointerMove, { passive: true });
         window.addEventListener('touchend', onPointerUp);
-
-        // 6. Penanganan Eksekusi Link (Anti-Nyangkut)
+        
+// 6. Penanganan Eksekusi Link (Responsif Instan Tanpa Menunggu Berhenti)
+// 6. Penanganan Eksekusi Link (Responsif Instan Tanpa Jeda / Selama Moving)
         items.forEach((item, i) => {
+            // Gunakan 'pointerdown' atau 'click' yang langsung merespons sentuhan pertama
             item.addEventListener('click', (e) => {
-                e.preventDefault(); // Kita override bawaan default browser, jalankan lewat JS secara manual
+                e.preventDefault(); 
 
+                // Jika pengguna benar-benar melakukan swipe/geser layar yang panjang, batalkan klik
                 if (hasMoved) {
-                    return; // Batal. Ini adalah murni gestur swipe/geser.
+                    hasMoved = false;
+                    return; 
                 }
                 
-                // Jika user mengklik kartu di samping, geser kartu ke tengah
-                if (Math.round(targetIndex) !== i) {
-                    targetIndex = i; 
-                } 
-                // Jika kartunya berada posisi tengah yang tepat, eksekusi buka halaman.
-                else {
-                    window.open(item.href, "_blank"); 
-                }
+                // Eksekusi langsung buka tautan menu yang diklik secara instan
+                window.open(item.href, "_blank");
             });
             
-            // Matikan perilaku browser saat link ditahan 
             item.addEventListener('dragstart', (e) => e.preventDefault());
         });
     </script>
