@@ -291,8 +291,8 @@
             targetIndex = startDragIndex - (diffX / dragFactor);
             targetIndex = Math.max(-0.2, Math.min(menuData.length - 0.8, targetIndex));
             
-            // Hanya anggap sebagai pergeseran (swipe) jika pergerakan jari/mouse lebih dari 25px
-            if (Math.abs(currentX - startXCoord) > 25) {
+            // Ambang batas diperbesar agar sentuhan atau gesekan kecil tetap dihitung sebagai klik (tidak memblokir tombol)
+            if (Math.abs(currentX - startXCoord) > 800) {
                 hasMoved = true;
             }
         }
@@ -303,6 +303,9 @@
             scene.style.cursor = 'default';
             targetIndex = Math.round(targetIndex);
             targetIndex = Math.max(0, Math.min(menuData.length - 1, targetIndex));
+            
+            // Reset status gerak setelah beberapa milidetik agar klik berikutnya langsung normal
+            setTimeout(() => { hasMoved = false; }, 5);
         }
 
         // Event listener window/scene
@@ -313,6 +316,24 @@
         scene.addEventListener('touchstart', onPointerDown, { passive: true });
         window.addEventListener('touchmove', onPointerMove, { passive: true });
         window.addEventListener('touchend', onPointerUp);
+        
+        // 6. Penanganan Eksekusi Link (Responsif Instan Saat Bergerak/Scrolling)
+        items.forEach((item, i) => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault(); 
+
+                // Jika benar-benar melakukan swipe/geser jauh, abaikan klik
+                if (hasMoved) {
+                    hasMoved = false;
+                    return; 
+                }
+                
+                // Langsung buka link tujuan secara instan tanpa jeda dan tanpa harus menunggu berhenti bergerak
+                window.open(item.href, "_blank");
+            });
+            
+            item.addEventListener('dragstart', (e) => e.preventDefault());
+        });
         
 // 6. Penanganan Eksekusi Link (Responsif Instan Tanpa Menunggu Berhenti)
 // 6. Penanganan Eksekusi Link (Responsif Instan Tanpa Jeda / Selama Moving)
