@@ -2,393 +2,332 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Resmi SMAN 1 TAMANSARI</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome untuk Ikon -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Portal SMAN 1 TAMANSARI</title>
+    <!-- Menggunakan Font Awesome untuk Ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
-        /* === RESET & VARIABEL === */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
+        /* Tema Dominan Terang */
         :root {
-            --primary: #1e3c72;
-            --secondary: #2a5298;
-            --accent: #ffb703;
-            --bg-color: #0f172a;
-            --text-light: #ffffff;
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --bg-color-1: #e0f2fe;
+            --bg-color-2: #ffffff;
+            --primary-color: #0284c7;
+            --text-color: #334155;
+            --card-bg: rgba(255, 255, 255, 0.95);
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-light);
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
-
-        /* === PARALLAX HERO SECTION === */
-        .hero {
-            position: relative;
-            height: 100vh;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color-1) 0%, var(--bg-color-2) 100%);
+            color: var(--text-color);
+            overflow: hidden; /* Mencegah scroll bar bawaan */
             display: flex;
-            align-items: center;
-            justify-content: center;
+            flex-direction: column;
+            height: 100vh;
+            user-select: none;
+        }
+
+        header {
             text-align: center;
-            overflow: hidden;
-        }
-
-        /* Animated Gradient Background */
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 120%; /* Lebih besar untuk efek parallax */
-            background: linear-gradient(-45deg, #1e3c72, #2a5298, #0f172a, #112240);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            z-index: -2;
-            transform: translateZ(0);
-        }
-
-        /* Motion Graphic Elements */
-        .circle {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,183,3,0.3) 0%, rgba(255,183,3,0) 70%);
-            z-index: -1;
-            animation: float 6s ease-in-out infinite;
-        }
-        .circle-1 { width: 400px; height: 400px; top: -100px; left: -100px; animation-delay: 0s; }
-        .circle-2 { width: 600px; height: 600px; bottom: -200px; right: -150px; animation-delay: 2s; }
-
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0px) scale(1); }
-            50% { transform: translateY(-30px) scale(1.05); }
-            100% { transform: translateY(0px) scale(1); }
-        }
-
-        .hero-content {
-            z-index: 1;
-            padding: 20px;
-            transform: translateY(0);
-            transition: transform 0.1s ease-out;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            background: linear-gradient(to right, #fff, var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            letter-spacing: 2px;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            font-weight: 300;
-            opacity: 0.9;
-            margin-bottom: 30px;
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 2rem;
-            color: var(--accent);
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
-            40% { transform: translateY(-20px) translateX(-50%); }
-            60% { transform: translateY(-10px) translateX(-50%); }
-        }
-
-        /* === PORTAL MENU SECTION === */
-        .portal-section {
-            padding: 100px 5%;
-            position: relative;
+            padding: 30px 20px 10px 20px;
             z-index: 10;
-            background: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .section-title {
-            text-align: center;
+        .school-logo {
+            width: 90px;
+            height: auto;
+            margin-bottom: 15px;
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1));
+        }
+
+        header h1 {
+            margin: 0;
             font-size: 2.5rem;
-            margin-bottom: 60px;
-            position: relative;
-        }
-        
-        .section-title::after {
-            content: '';
-            width: 80px;
-            height: 4px;
-            background: var(--accent);
-            display: block;
-            margin: 15px auto 0;
-            border-radius: 2px;
+            color: var(--primary-color);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            letter-spacing: 1px;
         }
 
-        /* Grid Layout */
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
+        header p {
+            margin-top: 5px;
+            font-size: 1.1rem;
+            color: #64748b;
         }
 
-        /* Glassmorphism Card */
-        .menu-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 40px 30px;
-            text-align: center;
-            text-decoration: none;
-            color: var(--text-light);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            opacity: 0;
-            transform: translateY(50px);
-            position: relative;
+        /* Container 3D Cover Flow */
+        .scene {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px; /* Kedalaman 3D untuk efek Flip */
+            touch-action: pan-y;
+            width: 100%;
             overflow: hidden;
         }
 
-        /* Animasi Sorotan saat Hover */
-        .menu-card::before {
-            content: '';
+        .carousel {
+            width: 100%;
+            height: 250px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform-style: preserve-3d;
+        }
+
+        .carousel-item {
             position: absolute;
-            top: 0; left: -100%;
-            width: 50%; height: 100%;
-            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
-            transform: skewX(-25deg);
-            transition: all 0.7s ease;
+            width: 240px;
+            height: 180px;
+            background: var(--card-bg);
+            border: 2px solid #bae6fd;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(2, 132, 199, 0.15);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-color);
+            cursor: pointer;
+            /* Perubahan halus untuk efek hover non-transform */
+            transition: background-color 0.3s;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
         }
 
-        .menu-card:hover::before {
-            left: 200%;
+        .carousel-item i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            /* Efek transisi ditangani JS agar sinkron dengan Cover Flow */
         }
 
-        .menu-card:hover {
-            transform: translateY(-15px) scale(1.03);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(255,183,3,0.2);
-            border-color: rgba(255,183,3,0.4);
-            background: rgba(255,255,255,0.1);
-        }
-
-        .menu-card i {
-            font-size: 3.5rem;
-            color: var(--accent);
-            margin-bottom: 20px;
-            transition: transform 0.4s ease;
-        }
-
-        .menu-card:hover i {
-            transform: scale(1.2) rotate(5deg);
-        }
-
-        .menu-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 10px;
+        .carousel-item span {
+            font-size: 1.1rem;
             font-weight: 600;
-        }
-
-        .menu-card p {
-            font-size: 0.9rem;
-            opacity: 0.7;
-            line-height: 1.5;
-        }
-
-        /* Class untuk animasi muncul saat di-scroll */
-        .menu-card.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* === FOOTER === */
-        footer {
             text-align: center;
-            padding: 30px;
-            background: rgba(0,0,0,0.5);
-            font-size: 0.9rem;
-            opacity: 0.7;
+            padding: 0 10px;
         }
 
-        /* === RESPONSIVE === */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .hero p { font-size: 1rem; }
-            .section-title { font-size: 2rem; }
+        .instructions {
+            position: absolute;
+            bottom: 30px;
+            width: 100%;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            pointer-events: none;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+
+        /* Responsif untuk layar HP kecil */
+        @media (max-width: 600px) {
+            .carousel-item { width: 200px; height: 150px; }
+            header h1 { font-size: 1.8rem; }
+            .school-logo { width: 70px; margin-bottom: 10px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- HERO SECTION DENGAN EFEK PARALLAX -->
-    <header class="hero" id="home">
-        <div class="hero-bg" id="hero-bg"></div>
-        <div class="circle circle-1"></div>
-        <div class="circle circle-2"></div>
-        
-        <div class="hero-content" id="hero-content">
-            <h1>SMAN 1 TAMANSARI</h1>
-            <p>Sistem Layanan Terpadu & Digitalisasi Pendidikan</p>
-            <a href="#portals" style="text-decoration:none;">
-                <div style="padding: 12px 30px; background: var(--accent); color: #000; border-radius: 30px; font-weight: bold; display: inline-block; margin-top: 20px; transition: 0.3s; box-shadow: 0 10px 20px rgba(255,183,3,0.3);">
-                    Masuk Portal
-                </div>
-            </a>
-        </div>
-        
-        <div class="scroll-indicator">
-            <i class="fas fa-chevron-down"></i>
-        </div>
+    <header>
+        <img src="Gemini_Generated_Image_bzyh71bzyh71bzyh.png" alt="Logo SMAN 1 TAMANSARI" class="school-logo">
+        <h1>SMAN 1 TAMANSARI</h1>
+        <p>Portal Layanan Kegiatan Pembelajaran T.A 2026-2027</p>
     </header>
 
-    <!-- PORTAL MENU SECTION -->
-    <section class="portal-section" id="portals">
-        <h2 class="section-title">Direktori Portal</h2>
-        
-        <!-- Wadah Grid untuk Menu (Diisi Otomatis oleh JavaScript) -->
-        <div class="menu-grid" id="menu-container">
-            <!-- Menu Cards akan di-render di sini -->
+    <div class="scene" id="scene">
+        <div class="carousel" id="carousel">
+            <!-- Item Menu digenerate di sini -->
         </div>
-    </section>
+    </div>
 
-    <!-- FOOTER -->
-    <footer>
-        <p>&copy; 2026 SMAN 1 TAMANSARI. Hak Cipta Dilindungi.</p>
-    </footer>
+    <div class="instructions">
+        <i class="fas fa-hand-pointer"></i> Geser, scroll, atau klik menu di samping untuk memutar
+    </div>
 
-    <!-- JAVASCRIPT -->
     <script>
-        /**
-         * 1. DATA MENU PORTAL
-         * Anda dapat MENAMBAHKAN, MENGHAPUS, atau MENGUBAH menu di bawah ini dengan sangat mudah.
-         * Cukup tambahkan object baru ke dalam array `portalMenus`.
-         */
-        const portalMenus = [
-            {
-                title: "Portal Piket",
-                link: "https://piketsmanit26.web.app/",
-                icon: "fas fa-calendar-alt",
-                desc: "Manajemen dan pencatatan piket harian sekolah."
-            },
-            {
-                title: "Portal BK",
-                link: "https://piketsmanit26.web.app/siskomen.html",
-                icon: "fas fa-user-shield",
-                desc: "Layanan Bimbingan dan Konseling terpadu untuk siswa."
-            },
-            {
-                title: "Portal Siswa",
-                link: "https://piketsmanit26.web.app/report_siswa.html",
-                icon: "fas fa-user-graduate",
-                desc: "Informasi nilai, raport, dan layanan akademik siswa."
-            },
-            {
-                title: "Portal LMS Guru",
-                link: "https://smanitlms26.web.app/#",
-                icon: "fas fa-chalkboard-teacher",
-                desc: "Sistem Manajemen Pembelajaran khusus Tenaga Pendidik."
-            },
-            {
-                title: "Portal LMS Kokulikuler",
-                link: "https://smanitlms26.web.app/siswa.html",
-                icon: "fas fa-users-cog",
-                desc: "Akses pembelajaran dan absensi kegiatan kokulikuler."
-            }
-            /* 
-            Contoh cara menambahkan menu baru:
-            ,{
-                title: "Portal Perpustakaan",
-                link: "https://perpus.smanit.edu",
-                icon: "fas fa-book",
-                desc: "Akses e-book dan peminjaman buku digital."
-            }
-            */
+        const menuData = [
+            { id: 1, title: "Portal Piket (Siprestasi)", icon: "fa-clipboard-user", url: "https://piketsmanit26.web.app/" },
+            { id: 2, title: "Portal BK", icon: "fa-user-tie", url: "https://piketsmanit26.web.app/siskomen.html" },
+            { id: 3, title: "Portal Siswa", icon: "fa-user-graduate", url: "https://piketsmanit26.web.app/report_siswa.html" },
+            { id: 4, title: "LMS Kordinator", icon: "fa-chalkboard-teacher", url: "https://smanitlms26.web.app/#" },
+            { id: 5, title: "LMS Siswa (Kokulikuler)", icon: "fa-users-gear", url: "https://smanitlms26.web.app/siswa.html" },
+            { id: 6, title: "Perangkat KBM", icon: "fa-folder", url: "https://drive.google.com/drive/folders/1twwuiIaemZdQE7xtTmlxEaxFoN-CpMUw" }
         ];
 
-        /**
-         * 2. RENDER MENU KE HTML (Dynamic Rendering)
-         */
-        const menuContainer = document.getElementById('menu-container');
-        
-        portalMenus.forEach((menu, index) => {
-            const card = document.createElement('a');
-            card.href = menu.link;
-            card.className = 'menu-card';
-            card.target = "_blank"; // Buka di tab baru
-            // Atur delay animasi secara berurutan agar atraktif
-            card.style.transitionDelay = `${index * 0.1}s`; 
+        const carousel = document.getElementById('carousel');
+        const scene = document.getElementById('scene');
+        const itemWidth = window.innerWidth <= 600 ? 200 : 240; 
+        const items = [];
 
-            card.innerHTML = `
-                <i class="${menu.icon}"></i>
-                <h3>${menu.title}</h3>
-                <p>${menu.desc}</p>
+        // 1. Generate HTML Menu
+        menuData.forEach((menu, index) => {
+            const a = document.createElement('a');
+            a.className = 'carousel-item';
+            a.href = menu.url;
+            a.innerHTML = `
+                <i class="fa-solid ${menu.icon}"></i>
+                <span>${menu.title}</span>
             `;
-            menuContainer.appendChild(card);
+            carousel.appendChild(a);
+            items.push(a);
         });
 
-        /**
-         * 3. EFEK PARALLAX PADA SCROLL
-         */
-        const heroBg = document.getElementById('hero-bg');
-        const heroContent = document.getElementById('hero-content');
+        // 2. Variabel State
+        let currentIndex = 0;   // Posisi saat ini (bisa desimal untuk animasi)
+        let targetIndex = 0;    // Posisi tujuan (0, 1, 2, dst)
+        let isDragging = false;
+        let startX = 0;
+        let startDragIndex = 0;
+        let hasMoved = false;
+        let snapTimeout;
 
-        window.addEventListener('scroll', () => {
-            let scrollPosition = window.pageYOffset;
-            // Geser background lebih lambat dari scroll (efek parallax)
-            heroBg.style.transform = `translateY(${scrollPosition * 0.4}px)`;
-            // Geser teks hero sedikit ke atas dan pudarkan
-            heroContent.style.transform = `translateY(${scrollPosition * 0.2}px)`;
-            heroContent.style.opacity = 1 - (scrollPosition / 600);
-        });
+        // 3. Fungsi Render & Kalkulasi iTunes Cover Flow
+        function animate() {
+            // Efek Lerp (Pergerakan Halus)
+            currentIndex += (targetIndex - currentIndex) * 0.1;
 
-        /**
-         * 4. ANIMASI MUNCUL SAAT DI-SCROLL (Intersection Observer)
-         */
-        const observerOptions = {
-            threshold: 0.1, // Trigger saat 10% elemen terlihat
-            rootMargin: "0px 0px -50px 0px"
-        };
+            items.forEach((item, i) => {
+                const offset = i - currentIndex; // Jarak kartu ini dari pusat
+                const absOffset = Math.abs(offset);
+                const sign = Math.sign(offset);
+                
+                // Variabel t membatasi nilai maksimum efek rotasi utama (0 s/d 1)
+                const t = Math.min(absOffset, 1); 
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('show');
-                    // Unobserve setelah animasi selesai agar tidak berulang terus
-                    observer.unobserve(entry.target); 
+                // --- MATEMATIKA COVER FLOW ---
+                // 1. Rotasi (Flip): Kartu kiri rotasi ke kanan, kartu kanan rotasi ke kiri (-60 derajat)
+                const rotateY = sign * t * -60; 
+
+                // 2. Kedalaman (Z): Kartu tengah di depan (0), kartu samping mundur ke belakang
+                const translateZ = -t * 150 - absOffset * 20;
+
+                // 3. Jarak (X): Mengatur tumpang tindih (overlap) antar kartu
+                const overlap = itemWidth * 0.35; // Seberapa rapat kartu menumpuk
+                const activeSpread = itemWidth * 0.45; // Jarak ekstra agar kartu tengah tidak tertutup
+                const translateX = (offset * overlap) + (sign * t * activeSpread);
+
+                // --- APLIKASI STYLE ---
+                item.style.zIndex = Math.round(100 - absOffset * 10);
+                item.style.transform = `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg)`;
+                
+                // Efek memudar untuk kartu yang sangat jauh
+                item.style.opacity = Math.max(1 - (absOffset * 0.15), 0);
+
+                // Highlight khusus untuk kartu yang sedang aktif (berada di tengah)
+                const icon = item.querySelector('i');
+                if (absOffset < 0.5) {
+                    item.style.borderColor = "var(--primary-color)";
+                    item.style.boxShadow = "0 15px 40px rgba(2, 132, 199, 0.4)";
+                    item.style.background = "#ffffff";
+                    // Sedikit membesarkan ikon di tengah
+                    icon.style.transform = `scale(${1 + (1 - t) * 0.15})`; 
+                } else {
+                    item.style.borderColor = "#bae6fd";
+                    item.style.boxShadow = "0 10px 30px rgba(2, 132, 199, 0.15)";
+                    item.style.background = "var(--card-bg)";
+                    icon.style.transform = "scale(1)";
                 }
             });
-        }, observerOptions);
 
-        // Pasang observer ke semua kartu menu yang baru dibuat
-        const menuCards = document.querySelectorAll('.menu-card');
-        menuCards.forEach(card => {
-            observer.observe(card);
+            requestAnimationFrame(animate);
+        }
+        
+        // Mulai animasi
+        animate();
+
+        // 4. Interaksi Mouse Scroll (Wheel)
+        scene.addEventListener('wheel', (e) => {
+            if(e.cancelable) e.preventDefault(); 
+            
+            // Sensitivitas scroll (mendukung mouse & trackpad)
+            let delta = Math.sign(e.deltaY) * Math.min(Math.abs(e.deltaY), 50);
+            targetIndex += (delta * 0.015);
+            
+            // Batasi agar tidak keluar dari jumlah menu
+            targetIndex = Math.max(0, Math.min(menuData.length - 1, targetIndex));
+            
+            // Otomatis merapikan (Snap) ke tengah setelah scroll berhenti
+            clearTimeout(snapTimeout);
+            snapTimeout = setTimeout(() => {
+                targetIndex = Math.round(targetIndex);
+            }, 150);
+        }, { passive: false });
+
+        // 5. Interaksi Sentuh & Geser
+        function onPointerDown(e) {
+            isDragging = true;
+            hasMoved = false;
+            startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+            startDragIndex = targetIndex;
+            scene.style.cursor = 'grabbing';
+            clearTimeout(snapTimeout);
+        }
+
+        function onPointerMove(e) {
+            if (!isDragging) return;
+            const currentX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+            const diffX = currentX - startX;
+            
+            // Kecepatan geser
+            const dragFactor = itemWidth * 0.7;
+            targetIndex = startDragIndex - (diffX / dragFactor);
+            
+            // Batasan lembut (Soft Clamp) saat menggeser
+            targetIndex = Math.max(-0.2, Math.min(menuData.length - 0.8, targetIndex));
+            
+            if (Math.abs(diffX) > 5) hasMoved = true;
+        }
+
+        function onPointerUp(e) {
+            if (!isDragging) return;
+            isDragging = false;
+            scene.style.cursor = 'default';
+            
+            // Snap ke menu terdekat saat dilepas
+            targetIndex = Math.round(targetIndex);
+            targetIndex = Math.max(0, Math.min(menuData.length - 1, targetIndex));
+        }
+
+        // Listener Mouse
+        scene.addEventListener('mousedown', onPointerDown);
+        window.addEventListener('mousemove', onPointerMove);
+        window.addEventListener('mouseup', onPointerUp);
+
+        // Listener Sentuh (Mobile)
+        scene.addEventListener('touchstart', onPointerDown, { passive: true });
+        window.addEventListener('touchmove', onPointerMove, { passive: true });
+        window.addEventListener('touchend', onPointerUp);
+
+        // 6. Logika Klik Kartu ala iTunes
+        items.forEach((item, i) => {
+            item.addEventListener('click', (e) => {
+                if (hasMoved) {
+                    e.preventDefault(); // Batalkan klik jika baru saja digeser
+                    return;
+                }
+                // Jika mengklik kartu yang BUKAN di tengah, geser kartu itu ke tengah
+                if (Math.round(targetIndex) !== i) {
+                    e.preventDefault(); 
+                    targetIndex = i; // Pindahkan ke tengah
+                }
+                // Jika sudah di tengah, biarkan link terbuka secara natural (default action)
+            });
+            item.addEventListener('dragstart', (e) => e.preventDefault());
         });
     </script>
 </body>
