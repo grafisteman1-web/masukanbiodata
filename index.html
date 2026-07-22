@@ -106,7 +106,6 @@
             font-size: 3rem;
             color: var(--primary-color);
             margin-bottom: 15px;
-            /* Efek transisi ditangani JS agar sinkron dengan Cover Flow */
         }
 
         .carousel-item span {
@@ -127,7 +126,7 @@
             
         }
 
-       
+        }
 
         /* Responsif untuk layar HP kecil */
         @media (max-width: 600px) {
@@ -142,7 +141,7 @@
     <header>
         <img src="Gemini_Generated_Image_bzyh71bzyh71bzyh.png" alt="Logo SMAN 1 TAMANSARI" class="school-logo">
         <h1>SMAN 1 TAMANSARI</h1>
-        <p>Portal Layanan Kegiatan Pembelajaran T.A 2026-2027</p>
+        <p>Portal Layanan Kegiatan Pembelajaran T.A 2025-2026</p>
     </header>
 
     <div class="scene" id="scene">
@@ -152,7 +151,7 @@
     </div>
 
     <div class="instructions">
-        <i class="fas fa-hand-pointer"></i> Geser, scroll, atau klik menu di samping untuk memutar
+        <i class="fas fa-hand-pointer"></i> Geser atau scroll untuk memilih menu
     </div>
 
     <script>
@@ -175,6 +174,7 @@
             const a = document.createElement('a');
             a.className = 'carousel-item';
             a.href = menu.url;
+            a.target = "_blank";
             a.innerHTML = `
                 <i class="fa-solid ${menu.icon}"></i>
                 <span>${menu.title}</span>
@@ -184,80 +184,87 @@
         });
 
         // 2. Variabel State
-        let currentIndex = 0;   // Posisi saat ini (bisa desimal untuk animasi)
-        let targetIndex = 0;    // Posisi tujuan (0, 1, 2, dst)
+        let currentIndex = 0;   
+        let targetIndex = 0;    
         let isDragging = false;
         let startX = 0;
         let startDragIndex = 0;
         let hasMoved = false;
         let snapTimeout;
+        let lastRenderedIndex = -999; // Untuk mendeteksi apakah elemen sedang bergerak
 
         // 3. Fungsi Render & Kalkulasi iTunes Cover Flow
         function animate() {
             // Efek Lerp (Pergerakan Halus)
-            currentIndex += (targetIndex - currentIndex) * 0.1;
+            let diff = targetIndex - currentIndex;
+            
+            // Snap jika jarak sudah sangat kecil (mencegah komputasi berlebihan di latar)
+            if (Math.abs(diff) > 0.001) {
+                currentIndex += diff * 0.1;
+            } else {
+                currentIndex = targetIndex; 
+            }
 
-            items.forEach((item, i) => {
-                const offset = i - currentIndex; // Jarak kartu ini dari pusat
-                const absOffset = Math.abs(offset);
-                const sign = Math.sign(offset);
+            // HANYA update DOM CSS jika posisi (currentIndex) berubah. 
+            // Ini MENGHILANGKAN bug dimana Safari di iOS menghalangi klik pada elemen yang transisinya masih dirender.
+            if (Math.abs(currentIndex - lastRenderedIndex) > 0.0001) {
                 
-                // Variabel t membatasi nilai maksimum efek rotasi utama (0 s/d 1)
-                const t = Math.min(absOffset, 1); 
+                items.forEach((item, i) => {
+                    const offset = i - currentIndex; 
+                    const absOffset = Math.abs(offset);
+                    const sign = Math.sign(offset);
+                    
+                    const t = Math.min(absOffset, 1); 
 
-                // --- MATEMATIKA COVER FLOW ---
-                // 1. Rotasi (Flip): Kartu kiri rotasi ke kanan, kartu kanan rotasi ke kiri (-60 derajat)
-                const rotateY = sign * t * -60; 
+                    // --- MATEMATIKA COVER FLOW ---
+                    const rotateY = sign * t * -60; 
+                    const translateZ = -t * 150 - absOffset * 20;
+                    
+                    const overlap = itemWidth * 0.35; 
+                    const activeSpread = itemWidth * 0.45; 
+                    const translateX = (offset * overlap) + (sign * t * activeSpread);
 
-                // 2. Kedalaman (Z): Kartu tengah di depan (0), kartu samping mundur ke belakang
-                const translateZ = -t * 150 - absOffset * 20;
+                    // --- APLIKASI STYLE ---
+                    item.style.zIndex = Math.round(100 - absOffset * 10);
+                    item.style.transform = `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg)`;
+                    item.style.opacity = Math.max(1 - (absOffset * 0.15), 0);
 
-                // 3. Jarak (X): Mengatur tumpang tindih (overlap) antar kartu
-                const overlap = itemWidth * 0.35; // Seberapa rapat kartu menumpuk
-                const activeSpread = itemWidth * 0.45; // Jarak ekstra agar kartu tengah tidak tertutup
-                const translateX = (offset * overlap) + (sign * t * activeSpread);
-
-                // --- APLIKASI STYLE ---
-                item.style.zIndex = Math.round(100 - absOffset * 10);
-                item.style.transform = `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg)`;
+                    const icon = item.querySelector('i');
+                    if (absOffset < 0.5) {
+                        item.style.borderColor = "var(--primary-color)";
+                        item.style.boxShadow = "0 15px 40px rgba(2, 132, 199, 0.4)";
+                        item.style.background = "#ffffff";
+                        icon.style.transform = `scale(${1 + (1 - t) * 0.15})`; 
+                    } else {
+                        item.style.borderColor = "#bae6fd";
+                        item.style.boxShadow = "0 10px 30px rgba(2, 132, 199, 0.15)";
+                        item.style.background = "var(--card-bg)";
+                        icon.style.transform = "scale(1)";
+                    }
+                });
                 
-                // Efek memudar untuk kartu yang sangat jauh
-                item.style.opacity = Math.max(1 - (absOffset * 0.15), 0);
-
-                // Highlight khusus untuk kartu yang sedang aktif (berada di tengah)
-                const icon = item.querySelector('i');
-                if (absOffset < 0.5) {
-                    item.style.borderColor = "var(--primary-color)";
-                    item.style.boxShadow = "0 15px 40px rgba(2, 132, 199, 0.4)";
-                    item.style.background = "#ffffff";
-                    // Sedikit membesarkan ikon di tengah
-                    icon.style.transform = `scale(${1 + (1 - t) * 0.15})`; 
-                } else {
-                    item.style.borderColor = "#bae6fd";
-                    item.style.boxShadow = "0 10px 30px rgba(2, 132, 199, 0.15)";
-                    item.style.background = "var(--card-bg)";
-                    icon.style.transform = "scale(1)";
-                }
-            });
+                lastRenderedIndex = currentIndex;
+            }
 
             requestAnimationFrame(animate);
         }
         
-        // Mulai animasi
+        // Mulai loop animasi
         animate();
 
         // 4. Interaksi Mouse Scroll (Wheel)
         scene.addEventListener('wheel', (e) => {
             if(e.cancelable) e.preventDefault(); 
+            hasMoved = false;
+
+            // Mendukung scroll vertical maupun horizontal (trackpad)
+            let deltaVal = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+            let delta = Math.sign(deltaVal) * Math.min(Math.abs(deltaVal), 50);
             
-            // Sensitivitas scroll (mendukung mouse & trackpad)
-            let delta = Math.sign(e.deltaY) * Math.min(Math.abs(e.deltaY), 50);
             targetIndex += (delta * 0.015);
-            
-            // Batasi agar tidak keluar dari jumlah menu
             targetIndex = Math.max(0, Math.min(menuData.length - 1, targetIndex));
             
-            // Otomatis merapikan (Snap) ke tengah setelah scroll berhenti
+            // Otomatis merapikan ke kartu terdekat setelah scroll
             clearTimeout(snapTimeout);
             snapTimeout = setTimeout(() => {
                 targetIndex = Math.round(targetIndex);
@@ -267,7 +274,7 @@
         // 5. Interaksi Sentuh & Geser
         function onPointerDown(e) {
             isDragging = true;
-            hasMoved = false;
+            hasMoved = false; 
             startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
             startDragIndex = targetIndex;
             scene.style.cursor = 'grabbing';
@@ -279,50 +286,53 @@
             const currentX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
             const diffX = currentX - startX;
             
-            // Kecepatan geser
             const dragFactor = itemWidth * 0.7;
             targetIndex = startDragIndex - (diffX / dragFactor);
-            
-            // Batasan lembut (Soft Clamp) saat menggeser
             targetIndex = Math.max(-0.2, Math.min(menuData.length - 0.8, targetIndex));
             
-            if (Math.abs(diffX) > 5) hasMoved = true;
+            // Tingkatkan toleransi geseran jadi 15px agar kursor tremor saat klik tidak terhitung sebagai Drag
+            if (Math.abs(diffX) > 15) {
+                hasMoved = true;
+            }
         }
 
         function onPointerUp(e) {
             if (!isDragging) return;
             isDragging = false;
             scene.style.cursor = 'default';
-            
-            // Snap ke menu terdekat saat dilepas
             targetIndex = Math.round(targetIndex);
             targetIndex = Math.max(0, Math.min(menuData.length - 1, targetIndex));
         }
 
-        // Listener Mouse
+        // Event listener window/scene
         scene.addEventListener('mousedown', onPointerDown);
         window.addEventListener('mousemove', onPointerMove);
         window.addEventListener('mouseup', onPointerUp);
 
-        // Listener Sentuh (Mobile)
         scene.addEventListener('touchstart', onPointerDown, { passive: true });
         window.addEventListener('touchmove', onPointerMove, { passive: true });
         window.addEventListener('touchend', onPointerUp);
 
-        // 6. Logika Klik Kartu ala iTunes
+        // 6. Penanganan Eksekusi Link (Anti-Nyangkut)
         items.forEach((item, i) => {
             item.addEventListener('click', (e) => {
+                e.preventDefault(); // Kita override bawaan default browser, jalankan lewat JS secara manual
+
                 if (hasMoved) {
-                    e.preventDefault(); // Batalkan klik jika baru saja digeser
-                    return;
+                    return; // Batal. Ini adalah murni gestur swipe/geser.
                 }
-                // Jika mengklik kartu yang BUKAN di tengah, geser kartu itu ke tengah
+                
+                // Jika user mengklik kartu di samping, geser kartu ke tengah
                 if (Math.round(targetIndex) !== i) {
-                    e.preventDefault(); 
-                    targetIndex = i; // Pindahkan ke tengah
+                    targetIndex = i; 
+                } 
+                // Jika kartunya berada posisi tengah yang tepat, eksekusi buka halaman.
+                else {
+                    window.open(item.href, "_blank"); 
                 }
-                // Jika sudah di tengah, biarkan link terbuka secara natural (default action)
             });
+            
+            // Matikan perilaku browser saat link ditahan 
             item.addEventListener('dragstart', (e) => e.preventDefault());
         });
     </script>
